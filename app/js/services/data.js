@@ -1,26 +1,42 @@
-angular.module('myInit')
-  .service('Data', Data)
+  class Data {
+    constructor($http, $q) {
+      this.$http = $http;
+      this.$q = $q;
 
-function Data($http, API){
-  return {
-    getPersonajes: getPersonajes,
-    // getPersona: getPersona
+    }
+
+    getAll(){
+      return this.$http.get('https://swapi.co/api/people/')
+    }
+
+    getOne(url){
+      let dataPromise,
+      deferred = this.$q.defer();
+
+      this.$http.get(`${url}`).then((response)=>{
+          dataPromise = response.data;
+          this.$http.get(dataPromise.homeworld
+).then((response)=>{
+
+              
+
+              dataPromise['infoWorld'] = response.data;
+
+              deferred.resolve(dataPromise);
+          })
+          .catch((error)=>{
+            deferred.reject(error);
+          })
+      }).catch((error)=>{
+        deferred.reject(error)
+      })
+
+      return deferred.promise;
+    }
   }
 
-  function getPersonajes(){
-    console.log(API)
-    return $http.get(API)    
-      .then(getPersonajesOk)
-      .catch(getPersonajesFailed)
+  var n1 = new Data();
+  console.log(n1.getAll)
 
-      function getPersonajesOk(response){
-        console.log(response.data)
-        return response.data;
-      }
-
-      function getPersonajesFailed(error){
-        console.log('Error al comunicarse con el API:' + error.data)
-      }
-  }
-
-}
+  angular.module('myInit')
+    .service('data', Data)

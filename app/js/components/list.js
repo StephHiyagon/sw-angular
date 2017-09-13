@@ -1,60 +1,113 @@
 angular.module('myInit')
   .component('componenteRoot', {
-    controller:
-      class StarWars {
-        static http ($http,$inject){
-          return $inject = ["$http"];
-        }
-        // static $inject = ['$http'];
-        constructor(){
-          this.reparto=[];
-          // this.inject;
-          // this.getApi.$injector = ['$http'];
-        }
+    controller: class {
+      constructor(data) {
+        this.datos = data;
+        this.reparto= [];
 
-        getApi(){
-            $http.get('https://swapi.co/api/people/')
-            .then(function(response){
-              console.log(response.results[0].name)
-              this.reparto = response.results;
+      }
 
-            })
-            .catch(function(error){
-              console.log(error)
-            })
-        }
-      },
-    template:`{{ $ctrl.reparto | json}}
+      getPersonajes(){
+
+        console.log('usando el constructor:'+ this.datos.getAll)
+
+        this.datos.getAll()
+        .then((response)=>{
+          console.log(response.data.results)
+          this.reparto=response.data.results;
+          console.log(this.reparto);
+        })
+        .catch((error)=>{
+          console.log('Error al acceder al API:'+ error.data + '|' + error.message)
+        })
+      }
+    },
+    template:`<div class="row modificadoRow">
+              <div class="col-md-6 col-md-offset-3">
               <h1>Lista de Personajes</h1>
-              <button ng-click="$ctrl.getApi()">Mostrar personajes</button>
-                <h2>Personajes:{{$ctrl.reparto.length}}</h2>
-              <componente-personaje on-datos="$ctrl.reparto">
-              </componente-personaje>`
+              <button ng-click="$ctrl.getPersonajes()" class="btn btn-primary" ng-if="$ctrl.reparto.length==0? true : false">Mostrar personajes</button>
+              </div>
+              </div>
+              <componente-personajes on-datos="$ctrl.reparto" class="row text-left">
+              </componente-personajes>
+              `
   })
 
-  .component('componentePersonaje', {
+  .component('componentePersonajes', {
     bindings:{
       onDatos:'='
     },
 
     controller:
       class {
-        constructor(){
+        constructor(data){
+          console.log(data)
           this.onDatos;
+          this.info = data;
+          this.infoOne=[];
+
+        }
+
+        getItem(url){
+          this.info.getOne(url)
+          .then((resp)=>{
+            console.log(resp)
+            this.infoOne= resp;
+          })
+          .catch((e)=>{
+            console.log('error:' + e.message)
+          })
+
         }
       },
 
       template: `
-                  {{ $ctrl.onDatos | json}}
+                  <div class="col-md-4 col-md-offset-4" ng-if="$ctrl.onDatos.length > 0 ? true : false">
+                  <h2 >Son {{$ctrl.onDatos.length}} personajes</h2>
                   <h2>Aquí comienza la lista:</h2>
-                  <h4 ng-repeat="personaje in $ctrl.onDatos"> Name: {{personaje.name}}</h4>
+                  <div ng-repeat="personaje in $ctrl.onDatos" class="jumbotron">
+                  <h3>Name: {{personaje.name}}</h3>
+                  <h3 ng-if="personaje.gender=='n/a'? false : true">Gender: {{personaje.gender}}</h3>
+                  <div class="text-right"><button class="btn btn-success" ng-click="$ctrl.getItem(personaje.url)">Leer más</button></div>
+                  </div>
+                  <componente-personaje on-info-one="$ctrl.infoOne"></componente-personaje>
+                  </div>
       `
 
   })
 
-//nf-if="$ctrl.reparto == [] ? false : true"
+  .component('componentePersonaje',{
+    bindings: {
+      onInfoOne: '='
+    },
+    controller:
+     class {
+       constructor(data){
+
+         this.onInfoOne;
+
+         console.log(this.dataWorld)
+       }
+     },
+
+     template:
+       `  {{$ctrl.onInfoOne | json}}
+          {{$ctrl.onInfoOne.data.homeworld}}
+          {{getWorld($ctrl.onInfoOne.data.homeworld)}}
+          <div ng-if="$ctrl.onInfoOne.length==0? false : true">
+            <h3>Información de {{$ctrl.onInfoOne.name}}</h3>
+            <h3>Año de Nacimiento: {{$ctrl.onInfoOne.birth_year}}</h3>
+            <h3>Color de Ojos: {{$ctrl.onInfoOne.eye_color}}</h3>
+            <h4 >Hogar: {{$ctrl.onInfoOne.infoWorld.name}}</h4>
+          </div>`
+
+  })
+
+
+
 // getData(Data){
   // console.log(Data);
+  //  {{ $ctrl.onDatos | json}}
   // Data.getPersonajes()
   // .then((data) => {
   //   this.reparto = data;
