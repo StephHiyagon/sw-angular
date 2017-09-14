@@ -9,7 +9,7 @@
       let datosFirstPromise,
       deferred = this.$q.defer();
 
-      this.$http.get('https://swapi.co/api/people/')
+      this.$http.get('https://swapi.co/api/people/', { cache: true })
         .then((response)=>{
           datosFirstPromise = response.data;
           deferred.resolve(datosFirstPromise);
@@ -17,7 +17,7 @@
         .catch((error)=>{
           deferred.reject(error);
         })
-
+        console.log('retorna promesa');
         return deferred.promise;
     }
 
