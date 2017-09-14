@@ -11,7 +11,7 @@ angular.module('myInit')
             this.info = data;
             this.infoOne=[];
             // this.$location = $location;
-            console.log(this.onDatos)
+
           }
 
           getItem(url1 , name1){
@@ -29,7 +29,7 @@ angular.module('myInit')
           }
         },
 
-        template: `
+        template: ` <h3>Componente personajes</h3>
                     <div class="col-md-4 col-md-offset-4" ng-if="$ctrl.onDatosPersonajes.length > 0 ? true : false">
                     <h2 >Son {{$ctrl.onDatosPersonajes.length}} personajes</h2>
                     <h2>Aquí comienza la lista:</h2>
@@ -42,8 +42,9 @@ angular.module('myInit')
                     </a>
                     </div>
                     </div>
-                    <componente-personaje on-info-one="$ctrl.infoOne"></componente-personaje>
                     </div>
                   `
 
     })
+
+    //<componente-personaje on-info-one="$ctrl.infoOne"></componente-personaje>

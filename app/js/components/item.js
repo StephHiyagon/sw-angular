@@ -7,9 +7,7 @@ angular.module('myInit')
        class {
          constructor(data){
 
-           this.onInfoOne;
-
-           console.log(this.dataWorld)
+           this.onInfoOne;           
          }
        },
 
