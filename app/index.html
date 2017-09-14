@@ -4,18 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <base href="/">
   <title>Star Wars</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <link rel="stylesheet" href="css/main.css">
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js" charset="utf-8"></script>
   <script src="js/vendor/angular-route.min.js" charset="utf-8"></script>
-  <script src="js/vendor/angular-resource.min.js" charset="utf-8"></script>
+  <!-- <script src="https://unpkg.com/angular-ui-router/release/angular-ui-router.min.js"></script> -->
+  <script src="https://unpkg.com/@uirouter/angularjs@1.0.5/release/angular-ui-router.js"></script>
   <script src="js/app.js" charset="utf-8"></script>
-
+  <script src="js/app-config.js" charset="utf-8"></script>
   <script src="js/services/data.js" charset="utf-8"></script>
-  <script src="js/components/list.js" charset="utf-8"></script>
+  <script src="js/components/principal.js" charset="utf-8"></script>
+  <script src="js/components/listAll.js" charset="utf-8"></script>
+  <script src="js/components/item.js" charset="utf-8"></script>
 </head>
 <body>
-  <componente-root class="container text-center"></componente-root>
+  <!-- <componente-root class="container text-center"></componente-root> -->
+  <!-- <ui-view></ui-view> -->
+  <div ng-view></div>
 </body>
 </html>

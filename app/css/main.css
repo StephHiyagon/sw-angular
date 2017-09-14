@@ -1,4 +1,8 @@
 .modificadoRow{
   margin-right: 0;
-  margin-left: 0; 
+  margin-left: 0;
+}
+
+componente-personaje h3.blue-text {
+  color: blue;
 }
